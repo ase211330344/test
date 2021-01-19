@@ -1,0 +1,41 @@
+(function () {
+    'use strict';
+    Object.defineProperty(
+        document, 'cookie', {
+        set: function (cookie) {
+            console.log("cookie被设置：", cookie)
+            return cookie;
+        }
+    })
+})();
+
+(function () {
+    Hook_obj = this;
+    Hook_prop = "t";
+
+    Object.defineProperty(Hook_obj, Hook_prop, {
+        set: function (property) {
+            console.log("property被设置: " + Hook_prop + "=" + property)
+            debugger;
+            return property;
+        }
+    })
+})();
+
+(function () {
+    var new_function = g;
+    g = function (e) {
+        var result = new_function(e);
+        console.log(e, result);
+        return result;
+    }
+})();
+
+eval_ = eval;
+eval = function(x){
+	if(x.indexOf('debugger')>-1){
+		return "";
+	}else{
+		return eval_(x);
+	}
+};
